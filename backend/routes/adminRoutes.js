@@ -1,0 +1,1 @@
+import {Router} from 'express';import {dashboard,users} from '../controllers/adminController.js';import {protect,admin} from '../middleware/authMiddleware.js';const r=Router();r.use(protect,admin);r.get('/dashboard',dashboard);r.get('/users',users);export default r;

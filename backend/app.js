@@ -7,18 +7,21 @@ import transactions from './routes/transactionRoutes.js';
 import admin from './routes/adminRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
+const allowedOrigins = (process.env.CLIENT_URL || '')
   .split(',')
   .map(o => o.trim())
   .filter(Boolean);
 
 const app = express();
 
+// If CLIENT_URL is not configured, allow all origins (safe — JWT auth, not cookies)
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
-    return cb(new Error('Origin not allowed by CORS'));
-  },
+  origin: allowedOrigins.length > 0
+    ? (origin, cb) => {
+        if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+        return cb(new Error('Origin not allowed by CORS'));
+      }
+    : true,
 }));
 
 app.use(express.json());

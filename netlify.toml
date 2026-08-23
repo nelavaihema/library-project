@@ -1,8 +1,18 @@
 [build]
-  base = "frontend"
-  command = "npm run build"
-  publish = "dist"
+  command = "cd backend && npm install && cd ../frontend && npm install && npm run build"
+  publish = "frontend/dist"
 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Proxy all /api/* requests to the serverless function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# SPA fallback — must come last
 [[redirects]]
   from = "/*"
   to = "/index.html"

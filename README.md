@@ -15,4 +15,4 @@ A portfolio-ready library management system with React/Vite, Express, MongoDB, J
 
 `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/books?search=&category=`, `GET /api/books/:id`, admin CRUD at `/api/books`, admin category CRUD at `/api/categories`, admin `POST /api/transactions/issue`, authenticated `GET /api/transactions/my-books`, `GET /api/transactions/history`, `PATCH /api/transactions/:id/return`, and admin dashboard at `GET /api/admin/dashboard`.
 
-Production deployments should set environment variables on Render/Railway and Vercel/Netlify, use MongoDB Atlas, and replace local `CLIENT_URL` and `VITE_API_URL` values with deployed origins.
+Production deployments should use MongoDB Atlas and deploy the Express backend to Render or Railway. Deploy this repository to Netlify for the frontend; `netlify.toml` configures the Vite build and React Router fallback. In Netlify site settings, set `VITE_API_URL` to the deployed backend URL ending in `/api`. On the backend, set `CLIENT_URL` to the Netlify site URL and set `MONGO_URI` and `JWT_SECRET`.
